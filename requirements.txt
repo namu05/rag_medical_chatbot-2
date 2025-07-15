@@ -1,0 +1,13 @@
+langchain
+langgraph
+langchain_community
+langchain_core
+langchain_openai
+sentence-transformers
+faiss-cpu
+pypdf
+transformers
+ollama
+python-dotenv
+langchain-huggingface
+ragas

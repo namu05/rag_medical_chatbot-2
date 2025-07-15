@@ -1,0 +1,23 @@
+# Python & venv
+__pycache__/
+*.py[cod]
+.venv/
+.env
+
+# Logs and outputs
+*.log
+*.csv
+*.json
+
+# FAISS vectorstore
+vectorstore_faiss/
+
+# Documents and data
+documents/
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+
