@@ -1,25 +1,50 @@
-# 🧠 Medical RAG Chatbot (Local LLM with Feedback Logging)
+# 🧠 RAG-Based Medical Chatbot
 
-This is a Retrieval-Augmented Generation (RAG) chatbot that answers medical queries based solely on a structured PDF case study. It uses a **locally hosted LLM via Ollama**, **LangChain**, and **FAISS** vector search with Hugging Face embeddings.
-
----
-
-## 📚 Case Study Scope
-
-- Drugs Information
-- Dosage, Administration, Side Effects, and Clinical Data
-- Comparative Analysis
+A domain-specific, document-grounded medical chatbot built using **LangChain**, **LangGraph**, and a **locally hosted open-source LLM**. This chatbot accurately answers user questions based solely on medical case study documents using a **Retrieval-Augmented Generation (RAG)** pipeline.
 
 ---
 
-## 🚀 Features
+## 🔧 Features
 
-- **RAG pipeline using LangGraph**  
-- **Dual memory (short-term + long-term)** tracking  
-- **Local LLM with Ollama** (e.g., LLaMA 3)  
-- **Human feedback** collection & CSV logging  
-- **Table-aware PDF parsing** and chunking  
-- CLI-based chat interface
+- 📄 Q&A over structured case study PDFs
+- 🧠 Uses a **local LLM** (via `Ollama` or Hugging Face)
+- 🔁 Modular **LangGraph pipeline** with:
+  - Question Rewriting
+  - Topic Classification
+  - Document Retrieval
+  - Relevance Grading
+  - Answer Generation
+  - Off-topic/Fallback Handling
+- 🗣️ Multi-turn conversation with **short- and long-term memory**
+- ✅ Feedback collection for model evaluation and improvement
+
+---
+
+## 🧱 Project Structure
+
+```bash
+rag_medical_chatbot-2/
+├── main.py
+├── config.py
+├── documents/
+│   └── Case Study.pdf   # <-- not committed (gitignored)
+├── feedback_log.csv
+├── vectorstore_faiss/
+├── rag/
+│   ├── graph.py
+│   ├── graph_nodes.py
+│   └── rag_chain.py
+├── data_loader/
+│   └── pdf_parser.py
+├── retriever/
+│   └── vectorstore.py
+├── llm/
+│   └── local_llm.py
+├── .env
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
 
 ---
 
@@ -28,58 +53,66 @@ This is a Retrieval-Augmented Generation (RAG) chatbot that answers medical quer
 ### ✅ Prerequisites
 
 - Python 3.10+
-- [Ollama](https://ollama.com/download) installed and running locally
-- `llama3` model downloaded via Ollama
-- (Optional) Hugging Face token for better embedding model access in .env file
+- [Ollama](https://ollama.com/download) (for local LLMs)
+- A supported local LLM model (e.g., `llama3`) downloaded via Ollama
+- (Optional) Hugging Face token in `.env` if using HF models for embedding
 
 ---
 
-### 💻 Setup on macOS/Linux
+### 💻 Setup (macOS / Linux)
 
 ```bash
-# Clone and enter the project
-git clone https://github.com/yourusername/rag-medical-chatbot.git
-cd rag-medical-chatbot
+# 1. Clone and navigate to the project
+git clone https://github.com/namu05/rag_medical_chatbot-2.git
+cd rag_medical_chatbot-2
 
-# Set up virtual environment
+# 2. Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# Download and run the model via Ollama (in another terminal tab)
+# 4. Launch the model using Ollama (in a separate terminal)
 ollama run llama3
+```
 
 ---
 
-### 💻 Setup on Windows
+### 💻 Setup (Windows)
 
-# Clone and enter the project
-git clone https://github.com/yourusername/rag-medical-chatbot.git
-cd rag-medical-chatbot
+```bash
+# 1. Clone and navigate to the project
+git clone https://github.com/namu05/rag_medical_chatbot-2.git
+cd rag_medical_chatbot-2
 
-# Set up virtual environment
+# 2. Create and activate a virtual environment
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scriptsctivate
 
-# Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# Download and run the model via Ollama (in a separate command prompt window)
+# 4. Launch the model using Ollama (in another Command Prompt)
 ollama run llama3
+```
 
+---
 
+### ▶️ Run the Chatbot
 
-#Run the Chatbot
+```bash
+python backend/main.py
+```
 
-python main.py
+You will be prompted for a user ID, and then the chatbot will begin:
 
-You will be prompted for a user ID, then can begin chatting:
-
+```
 Your question: What are the side effects of Repatha?
+```
 
-After receiving an answer, you’ll be asked:
+After the response, you'll be prompted for feedback:
+
+```
 🧠 [Feedback] Was this answer helpful? (Yes/No):
-
-
+```
