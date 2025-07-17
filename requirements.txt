@@ -10,4 +10,4 @@ transformers
 ollama
 python-dotenv
 langchain-huggingface
-ragas
+pdfplumber
